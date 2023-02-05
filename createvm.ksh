@@ -17,8 +17,8 @@ network='192.168.0'
 ubuntu='22.04'
 tmpext="tmp"
 
-source functions.ksh
-source init.ksh
+source fn/functions.ksh
+source fn/init.ksh
 
 vmExist "$name"
 if [ $? -eq 0 ]
