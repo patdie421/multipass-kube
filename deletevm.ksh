@@ -14,8 +14,8 @@ fi
 name="$1"
 tmpext="tmp"
 
-source init.ksh
-source functions.ksh
+source fn/init.ksh
+source fn/functions.ksh
 
 vmExist $1
 if [ $? -ne 0 ]
