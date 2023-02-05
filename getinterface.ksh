@@ -1,5 +1,5 @@
 INT=''
-ifconfig | grep '[a-z0-9]*:.*UP\|\ *inet ' | while read line
+ifconfig | grep '[a-z0-9]*:.*UP\|\ *inet |\ *ether ' | while read line
 do
    set $line
    if [ $1 == 'inet' ]
