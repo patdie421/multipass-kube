@@ -29,8 +29,7 @@ case $arch in
       helm='helm-v3.11.0-linux-amd64.tar.gz'
       helmpath="linux-amd64"
       ;;
-   "arm64")
-   "aarch64")
+   "arm64"|"aarch64")
       helm='helm-v3.11.0-linux-arm64.tar.gz'
       helmpath="linux-arm64"
       ;;
