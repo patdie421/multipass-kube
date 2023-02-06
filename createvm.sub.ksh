@@ -18,8 +18,14 @@ getMac()
    done
 }
 
-int1=`getMac | grep enp0s3 | cut -d' ' -f2`
-int2=`getMac | grep enp0s8 | cut -d' ' -f2`
+ints=''
+for x in $(getMac | cut -d' ' -f2)
+do
+   ints=$ints" "$x
+done
+set $ints
+int1=$1
+int2=$2
 
 cat /etc/netplan/50-cloud-init.yaml
 
