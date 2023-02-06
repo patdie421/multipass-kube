@@ -1,7 +1,24 @@
+usage()
+{
+   echo "usage: $1 <vmname>"
+}
+
+if [ $# -ne 1 ]
+then
+   usage $0
+   exit 1
+fi
+
 name="$1"
-mem="4"
-cpus="2"
-tmpext="tmp"
+
+source fn/functions.ksh
+source fn/init.ksh
+
+vmExist "$name"
+if [ $? -eq 0 ]
+then
+   exit 1
+fi
 
 mpexec="multipass exec "$name" -- "
 
