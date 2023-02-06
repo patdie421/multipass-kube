@@ -1,5 +1,3 @@
-#set -e
-
 usage()
 {
    echo "usage: $1 <vmname>"
@@ -11,18 +9,16 @@ then
    exit 1
 fi
 
-./checkvmexit.ksh $1
+name="$1"
+
+source fn/functions.ksh
+source fn/init.ksh
+
+vmExist "$name"
 if [ $? -ne 0 ]
 then
    exit 1
 fi
-
-#trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
-#trap 'echo "\"${last_command}\" command filed with exit code $?."' EXIT
-
-name="$1"
-mpexec="multipass exec "$name" -- "
-tmpext="tmp"
 
 $mpexec sudo apt install gnupg lsb-release
 

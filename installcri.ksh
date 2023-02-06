@@ -20,8 +20,6 @@ then
    exit 1
 fi
 
-mpexec="multipass exec "$name" -- "
-
 $mpexec sudo apt -y install golang
 
 multipass transfer installcri.sub.ksh "$name":
