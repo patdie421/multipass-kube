@@ -1,3 +1,8 @@
+getMacAddr()
+{
+   networksetup -getmacaddress en1 | sed "s/Ethernet Address: //g" | sed "s/ \(.*\)//g"
+}
+
 getInterface()
 {
    INT=''

@@ -40,3 +40,12 @@ cp ./config.tmp $HOME/.kube/config
 rm ./config.tmp
 
 $mpexec kubectl get nodes
+
+token=`$mpexec kubeadm token list | tail -1 | cut -d' ' -f1`
+$mpexec sudo openssl x509 -in /etc/kubernetes/pki/ca.crt -noout -pubkey |  openssl rsa -pubin -outform DER 2>/dev/null > .initworker."$tmpext"
+discoverytokencacerthash=`cat .initworker."$tmpext" | $mpexec sha256sum | cut -d' ' -f1`
+ip=`$mpexec cat .kube/config | grep server | cut -d':' -f3 | cut -d'/' -f3`
+rm .initworker."$tmpext"
+echo $token > .$name.token
+echo $discoverytokencacerthash > .$name.discoverytokencacerthash
+echo $ip > .$name.ip
