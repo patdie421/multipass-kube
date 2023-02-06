@@ -1,7 +1,24 @@
-name="$1"
-tmpext="tmp"
+usage()
+{
+   echo "usage: $1 <vmname>"
+}
 
-mpexec="multipass exec $name -- "
+if [ $# -ne 1 ]
+then
+   usage $0
+   exit 1
+fi
+
+name="$1"
+
+source fn/functions.ksh
+source fn/init.ksh
+
+vmExist "$name"
+if [ $? -ne 0 ]
+then
+   exit 1
+fi
 
 _ip=`$mpexec ifconfig -a enp0s2 | grep "inet "`
 set $_ip
