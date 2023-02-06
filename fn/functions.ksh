@@ -6,7 +6,27 @@ getInterface()
       set $line
       if [ "$1" == 'inet' ]
       then
-         if [ $INT != 'lo0:' ]
+         if [ "$INT" != 'lo0:' ]
+         then
+            _INT=`echo $INT | cut -d ':' -f1`
+            echo $_INT $2
+         fi
+         INT=''
+      else
+         INT=$1
+      fi
+   done
+}
+
+getMac()
+{
+   INT=''
+   ifconfig | grep '[a-z0-9]*:.*UP\|\ *ether ' | while read line
+   do
+      set $line
+      if [ "$1" == 'ether' ]
+      then
+         if [ "$INT" != 'lo0:' ]
          then
             _INT=`echo $INT | cut -d ':' -f1`
             echo $_INT $2

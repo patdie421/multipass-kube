@@ -45,3 +45,6 @@ then
 fi
 
 $mpexec ifconfig -a ; multipass networks
+multipass transfer createvm.sub.ksh "$name":
+$mpexec ./createvm.sub.ksh
+$mpexec rm createvm.sub.ksh
