@@ -1,8 +1,8 @@
 remotehost="$1"
-name="$2"
-master="$3"
+kpath="$2"
+name="$3"
+master="$4"
 token=`cat .$master.token`
 discoverytokencacerthash=`cat .$master.discoverytokencacerthash`
 ip=`cat .$master.ip`
-
-ssh $1 ./initworker3.ksh $name $ip $token $discoverytokencacerthash
+ssh -t $1 "cd \"$kpath\" ; ./initworker3.ksh $name $ip $token $discoverytokencacerthash"
