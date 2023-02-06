@@ -15,7 +15,7 @@ source fn/functions.ksh
 source fn/init.ksh
 
 vmExist "$name"
-if [ $? -eq 0 ]
+if [ $? -ne 0 ]
 then
    exit 1
 fi
