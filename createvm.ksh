@@ -26,7 +26,7 @@ then
    exit 1
 fi
  
-_int=`getInterface | grep $network` ; set $_int ; int=$1
+_int=`getInterface | grep $network | head -1` ; set $_int ; int=$1
 
 # create vm
 multipass launch "$ubuntu" --name "$name" --memory "$mem"G --disk "$disk"G --cpus "$cpus" --network "$int"
