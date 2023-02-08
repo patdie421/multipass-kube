@@ -17,8 +17,8 @@ network='192.168.0'
 ubuntu='22.04'
 tmpext="tmp"
 
-source fn/functions.ksh
-source fn/init.ksh
+source fns/functions.ksh
+source fns/init.ksh
 
 vmExist "$name"
 if [ $? -eq 0 ]
@@ -45,6 +45,6 @@ then
 fi
 
 $mpexec ifconfig -a ; multipass networks
-multipass transfer createvm.sub.ksh "$name":
+multipass transfer subs/createvm.sub.ksh "$name":
 $mpexec ./createvm.sub.ksh
 $mpexec rm createvm.sub.ksh

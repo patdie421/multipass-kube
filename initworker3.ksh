@@ -14,8 +14,8 @@ ip="$2"
 token="$3"
 discoverytokencacerthash="$4"
 
-source fn/functions.ksh
-source fn/init.ksh
+source fns/functions.ksh
+source fns/init.ksh
 
 vmExist "$name"
 if [ $? -ne 0 ]
