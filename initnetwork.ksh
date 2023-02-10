@@ -11,9 +11,11 @@ kubectl apply -f custom-resources.yaml
 rm custom-resources.yaml.$tmpext
 rm custom-resources.yaml
 
+sleep 30
 # metallb
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
 kubectl apply -f manifests/metallb-ipaddresspool.yaml
 kubectl apply -f manifests/metallb-l2advertisment.yaml
 
+sleep 30
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
