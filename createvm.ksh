@@ -33,7 +33,7 @@ multipass launch "$ubuntu" --name "$name" --memory "$mem"G --disk "$disk"G --cpu
 
 # install package
 $mpexec sudo apt update
-$mpexec sudo apt install -y net-tools apt-transport-https ca-certificates curl
+$mpexec sudo apt install -y net-tools apt-transport-https ca-certificates curl cifs-utils nfs-common
 
 # install ssh key
 multipass transfer "$name":.ssh/authorized_keys authorized_keys."$tmpext"
