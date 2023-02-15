@@ -1,9 +1,9 @@
-getMacAddr()
-{
-   networksetup -getmacaddress en1 | sed "s/Ethernet Address: //g" | sed "s/ \(.*\)//g"
-}
+#getMacAddr()
+#{
+#   networksetup -getmacaddress en1 | sed "s/Ethernet Address: //g" | sed "s/ \(.*\)//g"
+#}
 
-getInterface()
+getInterfaceIP()
 {
    INT=''
    ifconfig | grep '[a-z0-9]*:.*UP\|\ *inet ' | while read line
@@ -15,6 +15,26 @@ getInterface()
          then
             _INT=`echo $INT | cut -d ':' -f1`
             echo $_INT $2
+         fi
+         INT=''
+      else
+         INT=$1
+      fi
+   done
+}
+
+getInterfaceBroadcast()
+{
+   INT=''
+   ifconfig | grep '[a-z0-9]*:.*UP\|\ *inet ' | while read line
+   do
+      set $line
+      if [ "$1" == 'inet' ]
+      then
+         if [ "$INT" != 'lo0:' ]
+         then
+            _INT=`echo $INT | cut -d ':' -f1`
+            echo $_INT $2 $6
          fi
          INT=''
       else
@@ -41,6 +61,40 @@ getMac()
          INT=$1
       fi
    done
+}
+
+isWifiMacOs()
+{
+   int=$1
+#   cat networksetup.txt | while read line
+   networksetup -listallhardwareports | while read line
+   do
+      a=`expr "$line" : '\(.*\):.*' | tr '[:upper:]' '[:lower:]'`
+      b=`expr "$line" : '.*: *\(.*\)' | tr '[:upper:]' '[:lower:]'`
+      if [ "$a" == "hardware port" ]
+      then
+         port=$b
+      else
+         if [ "$a" == "device" ]
+         then
+            if [ "$port" == "wi-fi" ]
+            then
+               if [ "$b" == "$int" ]
+               then
+                  return 1
+               fi
+            fi
+         fi
+      fi
+   done
+   if [ $? -eq 1 ]
+   then
+      echo "true"
+      return 0
+   else
+      echo "false"
+      return 1
+   fi
 }
 
 vmExist()
