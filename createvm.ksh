@@ -12,16 +12,38 @@ fi
 name="$2"
 source fns/functions.ksh
 source fns/init.ksh
+cfgfile="$1"
+GETOPTIONS="python3 ./getoptions.py -c $cfgfile"
 
-GETOPTIONS="python3 ./getoptions.py -c $1"
+# get vm characteristics
+_vm=`$GETOPTIONS -V "$name"`
+if [ -z "$_vm" ]
+then
+   echo "vmname ($name) not found in config file"
+   exit 1
+fi
+vmExist "$name"
+if [ $? -eq 0 ]
+then
+   echo "vm $name already exist"
+   exit 1
+fi
+set $_vm
+cpus="$2"
+mem="$3"
+disk="$4"
+host="$5"
+ubuntu='22.04'
 
-_vm=$GETOPTIONS -V "$name"
 # get interface
-
 net=`$GETOPTIONS -n`
 _addrs=`$GETOPTIONS -N $net`
+if [ -z "$_addrs" ]
+then
+   echo "network ($net) not found in config file"
+   exit 1
+fi
 set $_addrs
-
 #get first no wifi active interface
 _int=`getWiredActiveInterfaces $2`
 if [ -z "$_int" ]
@@ -42,21 +64,6 @@ else
    int=$1
    echo "wired interface:" $int
 fi
-
-
-mem="4"
-cpus="2"
-disk="10"
-ubuntu='22.04'
-
-
-vmExist "$name"
-if [ $? -eq 0 ]
-then
-   exit 1
-fi
- 
-_int=`getInterface | grep $network | head -1` ; set $_int ; int=$1
 
 # create vm
 multipass launch "$ubuntu" --name "$name" --memory "$mem"G --disk "$disk"G --cpus "$cpus" --network "$int"
