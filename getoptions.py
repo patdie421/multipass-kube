@@ -7,9 +7,11 @@ import re
 def getArgs(api_description, api_epilog):
    parser=argparse.ArgumentParser(description=description, epilog=epilog, formatter_class=argparse.RawDescriptionHelpFormatter)
    parser.add_argument("-c", "--cfgfile", dest="cfgfile", metavar="FILE", help="", default="config.json")
+   parser.add_argument("-V", "--getvm", dest="vmname", metavar="STRING", help="", default=False)
    parser.add_argument("-W", "--getworker", dest="workername", metavar="STRING", help="", default=False)
    parser.add_argument("-M", "--getmaster", dest="mastername", metavar="STRING", help="", default=False)
    parser.add_argument("-N", "--getnetwork", dest="networkname", metavar="STRING", help="", default=False)
+   parser.add_argument("-v", "--listvms", action="store_true", dest="vms", help="", default=False)
    parser.add_argument("-m", "--listmasters", action="store_true", dest="masters", help="", default=False)
    parser.add_argument("-w", "--listworkers", action="store_true", dest="workers", help="", default=False)
    parser.add_argument("-n", "--listnetwors", action="store_true", dest="networks", help="", default=False)
@@ -26,11 +28,13 @@ args_parser, args, _args = getArgs(description, epilog)
 _m=args.masters
 _w=args.workers
 _n=args.networks
+_v=args.vms
 _W=bool(args.workername)
 _M=bool(args.mastername)
 _N=bool(args.networkname)
-if (_w + _m + _W + _M +_n + _N) > 1:
-   raise TypeError('-m, -w, -n, -M, -W and -N are incompatible')
+_V=bool(args.vmname)
+if (_w + _m + _W + _M +_n + _N + _v + _V) > 1:
+   raise TypeError('-v, -m, -w, -n, -V, -M, -W and -N are incompatible')
  
 f = open(args.cfgfile)
 data=json.load(f)
