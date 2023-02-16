@@ -13,10 +13,40 @@ name="$2"
 source fns/functions.ksh
 source fns/init.ksh
 
+GETOPTIONS="python3 ./getoptions.py -c $1"
+
+_vm=$GETOPTIONS -V "$name"
+# get interface
+
+net=`$GETOPTIONS -n`
+_addrs=`$GETOPTIONS -N $net`
+set $_addrs
+
+#get first no wifi active interface
+_int=`getWiredActiveInterfaces $2`
+if [ -z "$_int" ]
+then
+   #get first wifi active interface
+   _int=`getWirelessActiveInterfaces $2`
+   if [ -z "$_int" ]
+   then
+      echo "no interface available"
+      exit 1
+   else
+      set $_int
+      int=$1
+      echo "wireless interface:" $int
+   fi
+else
+   set $_int
+   int=$1
+   echo "wired interface:" $int
+fi
+
+
 mem="4"
 cpus="2"
 disk="10"
-network='192.168.0'
 ubuntu='22.04'
 
 
