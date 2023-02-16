@@ -63,6 +63,20 @@ getMac()
    done
 }
 
+getInterface()
+{ 
+   getInterfaceBroadcast | grep $1 | while read line
+   do
+      set $line
+      isWifiMacOs $1 > /dev/null 2>&1
+      if [ $? -ne 0 ]
+      then
+         echo "$1 \c"
+      fi
+  done
+  echo
+}
+
 isWifiMacOs()
 {
    int=$1
