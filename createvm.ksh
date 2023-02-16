@@ -9,10 +9,12 @@ then
    exit 1
 fi
 
+cfgfile="$1"
 name="$2"
+
 source fns/functions.ksh
 source fns/init.ksh
-cfgfile="$1"
+
 GETOPTIONS="python3 ./getoptions.py -c $cfgfile"
 
 # get vm characteristics
