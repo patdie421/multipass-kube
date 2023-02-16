@@ -39,7 +39,8 @@ ubuntu='22.04'
 
 # get interface
 net=`$GETOPTIONS -n`
-_addrs=`$GETOPTIONS -N $net`
+set $net
+_addrs=`$GETOPTIONS -N $1`
 if [ -z "$_addrs" ]
 then
    echo "network ($net) not found in config file"
