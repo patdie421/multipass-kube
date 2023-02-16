@@ -41,6 +41,7 @@ data=json.load(f)
 f.close()
  
 index={}
+vms=[]
 masters=[]
 workers=[]
 nfsservers=[]
@@ -53,15 +54,24 @@ for i in data:
       raise TypeError('duplicated name: "'+ i["name"].lower()+'"')
    if i["function"].lower()=="master":
       masters.append(i["name"])
+      vms.append(i["name"])
    elif i["function"].lower()=="worker":
       workers.append(i["name"])
+      vms.append(i["name"])
    elif i["function"].lower()=="nfsserver":
       nfsservers.append(i["name"])
    elif i["function"].lower()=="network":
       networks.append(i["name"])
    else:
       raise TypeError('unknown function: "'+ i["function"].lower()+'"')
- 
+
+if args.vms == True:
+   _vms=""
+   for i in vms:
+      _vms=_vms+" "+i
+   print(_vms.strip())
+   sys.exit(0)
+  
 if args.masters == True:
    _masters=""
    for i in masters:
@@ -82,7 +92,15 @@ if args.networks == True:
       _networks=_networks+" "+i
    print(_networks.strip())
    sys.exit(0)
- 
+
+if args.vmname != False:
+   if args.vmname in workers:
+      _vm=index[args.vmname]["name"]+" "+str(index[args.vmname]["cpus"])+" "+str(index[args.vmname]["memory"])+" "+str(index[args.vmname]["disk"])+" "+str(index[args.vmname]["host"])
+      print(_vm)
+      sys.exit(0)
+   else:
+     raise TypeError('worker not found: "'+args.workername+'"')
+   
 if args.workername != False:
    if args.workername in workers:
       _worker=index[args.workername]["name"]+" "+str(index[args.workername]["cpus"])+" "+str(index[args.workername]["memory"])+" "+str(index[args.workername]["disk"])+" "+str(index[args.workername]["host"])
@@ -104,3 +122,6 @@ if args.networkname != False:
       net=ipaddress.ip_network(index[args.networkname]["servers_network"])
       _network=index[args.networkname]["servers_network"]+" "+str(net.broadcast_address)+" "+index[args.networkname]["CIDR"]+" "+re.escape(index[args.networkname]["CIDR"])+" "+index[args.networkname]["lbrange"]
       print(_network)
+      sys.exit(0)
+   else:
+      raise TypeError('network not found: "'+args.vmname+'"')
