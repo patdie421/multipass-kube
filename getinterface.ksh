@@ -21,6 +21,6 @@ addrs=`$GETOPTIONS -N $net`
 set $addrs
 
 #get first no wifi active interface
-int=`getInterface $2`
-set $int
-echo $1
+_int=`getInterface $2`
+set $_int
+int=$1
