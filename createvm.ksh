@@ -1,24 +1,24 @@
 usage()
 {
-   echo "usage: $1 <vmname>"
+   echo "usage: $1 <cfgfile> <vmname>"
 }
 
-if [ $# -ne 1 ]
+if [ $# -ne 2 ]
 then
    usage $0
    exit 1
 fi
 
-name="$1"
+name="$2"
+source fns/functions.ksh
+source fns/init.ksh
+
 mem="4"
 cpus="2"
 disk="10"
 network='192.168.0'
 ubuntu='22.04'
-tmpext="tmp"
 
-source fns/functions.ksh
-source fns/init.ksh
 
 vmExist "$name"
 if [ $? -eq 0 ]
