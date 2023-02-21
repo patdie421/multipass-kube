@@ -1,9 +1,9 @@
 usage()
 {
-   echo "usage: $1 <cfgfile> <vmname>"
+   echo "usage: $1 <cfgfile> <vmname> [<ip>]"
 }
 
-if [ $# -ne 2 ]
+if [ $# -ne 2 ] && [ $# -ne 3 ]
 then
    usage $0
    exit 1

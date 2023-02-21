@@ -1,0 +1,26 @@
+[
+   {
+      "name":"kmaster01",
+      "cpus":2,
+      "memory":4,
+      "function":"master",
+      "disk":10,
+      "host":null,
+      "ip":"192.168.0.199"
+   },
+   {
+      "name":"kworker01",
+      "cpus":2,
+      "memory":4,
+      "function":"worker",
+      "disk":10,
+      "host":null
+   },
+   {
+      "name":"network01",
+      "function":"network",
+      "servers_network":"192.168.0.0/24",
+      "CIDR":"172.16.0.0/16",
+      "lbrange":"192.168.0.170-192.168.0.189"
+   }
+]
