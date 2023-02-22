@@ -97,7 +97,11 @@ if args.networks == True:
 
 if args.vmname != False:
    if args.vmname in vms:
-      _vm=index[args.vmname]["name"]+" "+str(index[args.vmname]["cpus"])+" "+str(index[args.vmname]["memory"])+" "+str(index[args.vmname]["disk"])+" "+str(index[args.vmname]["host"])
+      try:
+         ip=" "+str(index[args.vmname]["ip"])
+      except ValueError:
+         ip=""
+      _vm=index[args.vmname]["name"]+" "+str(index[args.vmname]["cpus"])+" "+str(index[args.vmname]["memory"])+" "+str(index[args.vmname]["disk"])+" "+str(index[args.vmname]["host"])+ip
       print(_vm)
       sys.exit(0)
    else:
@@ -105,7 +109,11 @@ if args.vmname != False:
    
 if args.workername != False:
    if args.workername in workers:
-      _worker=index[args.workername]["name"]+" "+str(index[args.workername]["cpus"])+" "+str(index[args.workername]["memory"])+" "+str(index[args.workername]["disk"])+" "+str(index[args.workername]["host"])
+      try:
+         ip=" "+str(index[args.workername]["ip"])
+      except ValueError:
+         ip=""
+      _worker=index[args.workername]["name"]+" "+str(index[args.workername]["cpus"])+" "+str(index[args.workername]["memory"])+" "+str(index[args.workername]["disk"])+" "+str(index[args.workername]["host"])+ip
       print(_worker)
       sys.exit(0)
    else:
@@ -113,7 +121,11 @@ if args.workername != False:
  
 if args.mastername != False:
    if args.mastername in masters:
-      _master=index[args.mastername]["name"]+" "+str(index[args.mastername]["cpus"])+" "+str(index[args.mastername]["memory"])+" "+str(index[args.mastername]["disk"])+" "+str(index[args.mastername]["host"])
+      try:
+         ip=" "+str(index[args.mastername]["ip"])
+      except ValueError:
+         ip=""
+      _master=index[args.mastername]["name"]+" "+str(index[args.mastername]["cpus"])+" "+str(index[args.mastername]["memory"])+" "+str(index[args.mastername]["disk"])+" "+str(index[args.mastername]["host"])+ip
       print(_master)
       sys.exit(0)
    else:

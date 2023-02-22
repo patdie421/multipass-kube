@@ -17,6 +17,15 @@
       "host":null
    },
    {
+      "name":"kworker02",
+      "cpus":2,
+      "memory":4,
+      "function":"worker",
+      "disk":10,
+      "host":null,
+      "ip":"192.168.0.201"
+   },
+   {
       "name":"network01",
       "function":"network",
       "servers_network":"192.168.0.0/24",

@@ -1,9 +1,9 @@
 usage()
 {
-   echo "usage: $1 <cfgfile> <vmname> [<ip>]"
+   echo "usage: $1 <cfgfile> <vmname>"
 }
 
-if [ $# -ne 2 ] && [ $# -ne 3 ]
+if [ $# -ne 2 ]
 then
    usage $0
    exit 1
@@ -35,6 +35,8 @@ cpus="$2"
 mem="$3"
 disk="$4"
 host="$5"
+ip="$6"
+
 ubuntu='22.04'
 
 # get interface
@@ -47,6 +49,7 @@ then
    exit 1
 fi
 set $_addrs
+nn=`echo $1 | cut -d'/' -f2`
 #get first no wifi active interface
 _int=`getWiredActiveInterfaces $2`
 if [ -z "$_int" ]
@@ -69,7 +72,17 @@ else
 fi
 
 # create vm
-multipass launch "$ubuntu" --name "$name" --memory "$mem"G --disk "$disk"G --cpus "$cpus" --network "$int"
+if [ -z "$ip" ]
+then
+   multipass launch "$ubuntu" --name "$name" --memory "$mem"G --disk "$disk"G --cpus "$cpus" --network "$int"
+   options=""
+else
+   multipass launch "$ubuntu" --name "$name" --memory "$mem"G --disk "$disk"G --cpus "$cpus" --network name="$int",mode=manual
+   _defaultgw=`netstat -rn -f inet | grep default | grep "$int"`
+   set $_defaultgw
+   defaultgw="$2"
+   options="$ip/$nn $defaultgw"
+fi
 
 # install package
 $mpexec sudo apt update
@@ -86,5 +99,6 @@ fi
 
 $mpexec ifconfig -a ; multipass networks
 multipass transfer subs/createvm.sub.ksh "$name":
-$mpexec ./createvm.sub.ksh
+
+$mpexec ./createvm.sub.ksh $options
 $mpexec rm createvm.sub.ksh
