@@ -69,7 +69,7 @@ do
       ssh $whost "$cmd"
       cmd="cd $wpath ; ./installcri.ksh $i"
       ssh $whost "$cmd"
-      cmd="cd $wpath ; ./initworker3 $i $i $ip $token $discoverytokencacerthash"
+      cmd="cd $wpath ; ./initworker3 $i $ip $token $discoverytokencacerthash"
       ssh $whost "$cmd"
    fi
 done
