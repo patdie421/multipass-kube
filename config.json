@@ -22,8 +22,7 @@
       "memory":4,
       "function":"worker",
       "disk":10,
-      "host":null,
-      "ip":"192.168.0.201"
+      "host":"champagne.local:/Users/patrice/dev/multipass-kube",
    },
    {
       "name":"network01",

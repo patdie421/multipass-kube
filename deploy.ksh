@@ -77,4 +77,3 @@ done
 ./initnetwork.ksh $cfgfile
 ./initstorage.ksh
 ./initdashboard.ksh
-
